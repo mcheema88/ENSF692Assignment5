@@ -92,3 +92,6 @@ def learn():
     # Return a string the describes one thing you learned in ENSF 692.
     pass
 
+
+if __name__ == "__main__":
+    app.run(debug=True)
