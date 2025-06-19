@@ -84,14 +84,28 @@ def book_data():
     book_data = pd.DataFrame(list(zip(titles, prices)), columns=['Titles','Prices'])    
     print(book_data)        # Print to the terminal as confirmation - only we can see this
 
+    # This is a function that I added -> called salePrices which hold point is to take in a value and convert to a sale price outlining a 25 % discount
+    # @param : This function takes in the original price
+    # @return : It returns the original price and reduces it by 25%
+    def salePrices(prices):
+        salePrice = round(prices * 0.75, 2) #by multiplying the price by 0.75 this effectively applies a 25% discount -> also as currency is only 2 decimal points reflected in cents -> I applied round and set to 2 decimal point through the comma.
+        return salePrice #returning the sale price
+    
+    book_data["Sale Price: Marley Cheema"] = book_data["Prices"].apply(salePrices) # this line of code is what creates the new column "Sale Price" and applies the function to the entire Prices column to generate values to populate the Sale Price column (Reference to ChatGPT for helping me with syntax for using .apply)
+
     # Format and print the DataFrame using the html template provided in the templates subdirectory
     return render_template('template.html',  tables=[book_data.to_html(classes='data')], titles=book_data.columns.values)
 
 @app.route("/learn")
 def learn():
-    # Return a string the describes one thing you learned in ENSF 692.
-    pass
 
+    #All I had to do here was add my statement to a String variable -> dynamically created in python of one thing I learned in this course
+    learning = "Through ENSF 692, I learned so much about how to effectively manipulate and look at data through hierchial indexing in Pandas Dataframes. While I was familiar with \n" \
+    "Pandas prior to this class, I had never used multilevel indexing before. I can certainly see how much it helps with sorting and \n"\
+    "slicing and ultimately making data and subsequent analysis so much easier! Excited to apply it \n" \
+    "in future projects! Best, Marley."
+    # Return a string the describes one thing you learned in ENSF 692.
+    return learning #returning my string to be outputted
 
 if __name__ == "__main__":
     app.run(debug=True)
